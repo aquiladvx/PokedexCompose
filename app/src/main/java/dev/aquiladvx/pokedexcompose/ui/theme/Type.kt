@@ -1,4 +1,4 @@
-package dev.aquiladvx.pokedexcompose.core.ui.theme
+package dev.aquiladvx.pokedexcompose.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
