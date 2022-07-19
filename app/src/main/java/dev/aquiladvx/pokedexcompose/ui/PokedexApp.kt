@@ -11,11 +11,11 @@ import androidx.navigation.compose.rememberNavController
 import dev.aquiladvx.pokedexcompose.ui.theme.PokedexComposeTheme
 
 @Composable
-fun PokedexApp(finishActivity: () -> Unit) {
+fun PokedexApp(viewModel: PokemonViewModel, finishActivity: () -> Unit) {
     PokedexComposeTheme {
         val navController = rememberNavController()
         Scaffold(backgroundColor = MaterialTheme.colors.primarySurface,) { innerPaddingModifier ->
-            NavGraph(finishActivity = finishActivity, navController = navController, modifier = Modifier.padding(innerPaddingModifier))
+            NavGraph(finishActivity = finishActivity, navController = navController, modifier = Modifier.padding(innerPaddingModifier), viewModel = viewModel)
         }
 
     }

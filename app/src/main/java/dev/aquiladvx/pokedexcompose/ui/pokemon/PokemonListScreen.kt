@@ -10,23 +10,47 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.aquiladvx.pokedexcompose.model.Pokemon
+import dev.aquiladvx.pokedexcompose.model.PokemonResponse
+import dev.aquiladvx.pokedexcompose.model.network.Resource
+import dev.aquiladvx.pokedexcompose.ui.PokemonViewModel
+import dev.aquiladvx.pokedexcompose.ui.common.Loader
 
 @Composable
-fun PokemonListScreen(goToDetail: (Int) -> Unit) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-            LazyColumn {
-                items(getFakeList()) { pokemon ->
-                    Surface(modifier = Modifier.padding(5.dp)) {
-                        PokemonCell(pokemon = pokemon) {
-                            goToDetail(it.getId())
-                        }
+fun PokemonListScreen(viewModel: PokemonViewModel, goToDetail: (Int) -> Unit) {
+    val allPokemonResource = viewModel.allPokemon.value
+
+    when (allPokemonResource) {
+        is Resource.Loading -> {
+            Loader()
+        }
+
+        is Resource.Success -> {
+            PokemonList(allPokemonResource.data!!.results, goToDetail)
+        }
+
+        is Resource.DataError -> {
+            print("error")
+        }
+    }
+
+}
+
+@Composable
+fun PokemonList(pokemon: List<Pokemon>, goToDetail: (Int) -> Unit) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background
+    ) {
+        LazyColumn {
+            items(pokemon) { pokemon ->
+                Surface(modifier = Modifier.padding(5.dp)) {
+                    PokemonCell(pokemon = pokemon) {
+                        goToDetail(it.getId())
                     }
                 }
             }
         }
+    }
 }
 
 fun getFakeList(): List<Pokemon> {

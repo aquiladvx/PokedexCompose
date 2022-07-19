@@ -23,7 +23,8 @@ object Destinations {
 fun NavGraph(
     finishActivity: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: PokemonViewModel
 ) {
 
     NavHost(
@@ -35,7 +36,7 @@ fun NavGraph(
                 finishActivity()
             }
 
-            PokemonListScreen {
+            PokemonListScreen(viewModel) {
                 navController.navigate("${Destinations.POKEMON_DETAIL}/$it")
             }
         }
